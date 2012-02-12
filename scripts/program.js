@@ -7,7 +7,6 @@
     var resultsList;
 
     $(document).ready(function () {
-
         $('#SubmitBtn').click(function () {
 
             $.mobile.changePage("#Results");
@@ -15,7 +14,6 @@
 
             return false;
         });
-
     });
 
     $('#Results').live('pagehide', function (event) {
@@ -51,19 +49,15 @@ function go() {
             callService();
 
         }, function () {
-            alert("FAIL!");
         });
     }
     else {
-        alert("Sorry, the alarm won't work if you do not allow the app to track your physical location");
+        navigator.notification.alert("Sorry, WikiWhere won't work if you do not allow the app to track your physical location", null, "Alert", "Alert");
     }
 }
 
 
 function callService() {
-
-//    lat = 47;
-//    lon = 9;
 
     var url = 'http://api.geonames.org/findNearbyWikipediaJSON?lat='+lat+'&lng='+lon+'&maxRows='+25+'&radius='+($('#slider').val())+'&username=markshort';
 
@@ -103,7 +97,7 @@ function buildUpList(list) {
                     src = "images/placeholder.jpg";
                 }   
             }
-            $('#List').append('<li><a target="_blank" class="listlink" id=' + i + '><img class="thumb" src="'+src+'" /><h3>' + list[i].title + '</h3><p> '+ firstSentence(list[i].summary) +' </p><p class="ui-li-aside"><strong>' + roundNumber(parseFloat(list[i].distance), 2) + 'km</strong></p></a><a target="_blank" href=http://maps.google.com/?saddr=' + lat + ',' + lon + '&daddr=' + list[i].lat + ',' + list[i].lng + ' data-rel="dialog" data-transition="slideup">Map</a></li>');
+            $('#List').append('<li><a target="_blank" class="listlink" id=' + i + '><img class="thumb" src="'+src+'" /><h3>' + list[i].title + '</h3><p class="ui-li-aside"><strong>' + roundNumber(parseFloat(list[i].distance), 2) + 'km</strong></p></a><a target="_blank" href=http://maps.google.com/?saddr=' + lat + ',' + lon + '&daddr=' + list[i].lat + ',' + list[i].lng + ' data-rel="dialog" data-transition="slideup">Map</a></li>');
         }
     }
     else {
@@ -132,6 +126,15 @@ function roundNumber(num, dec) {
 }
 
 function firstSentence(str) {
-    return str.split(/^(.*?)[.?!]\s/)[1] +".";
+
+    var array = str.split(/^(.*?)[.?!]\s/);
+
+    if (array[0].length > 1) {
+        return array[0];
+    }
+    else if (array[1].length > 1) {
+        return array[1];
+    }
+    else return "";
 }
 
