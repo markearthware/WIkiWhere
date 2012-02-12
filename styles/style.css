@@ -1,0 +1,57 @@
+.strong
+{
+    font-weight: bold;
+}
+
+.ui-icon-map
+{
+    background-image: url('images/map.png') !important;
+}
+
+.nobold
+{
+    font-weight: lighter;
+}
+
+.ui-field-contain
+{
+    padding-top: 0 !important;
+}
+
+.ui-field-contain div.ui-slider
+{
+    width: 76% !important;
+}
+
+.ui-li-heading,.ui-li-desc,.ui-li-aside
+{
+    white-space: normal !important;
+}
+
+.thumb
+{
+    margin: 7px;
+    margin-bottom: 0;
+    -webkit-border-radius: 4px !important;
+    border-radius: 4px !important;
+}
+
+.clear
+{
+    clear: both;
+}
+
+.thumb2
+{
+    margin-right: 7px;
+    margin-bottom: 0px;
+    -webkit-border-radius: 4px !important;
+    border-radius: 4px !important;
+}
+
+.left
+{
+    float:left;
+    clear: both;
+}
+
