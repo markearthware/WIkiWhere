@@ -18,6 +18,7 @@
 
     $('#index').live('pagehide', function (event) {
         $.mobile.showPageLoadingMsg();
+        $("#List").empty();
         go();
     });
 
