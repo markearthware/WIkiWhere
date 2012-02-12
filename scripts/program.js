@@ -21,11 +21,15 @@
     });
 
     $('#Results').live('pagebeforeshow', function (event) {
+        $.mobile.showPageLoadingMsg();
         go();
-  
     });
 
     $('#details').live('pagebeforeshow', function (event) {
+
+        $('#title').text("");
+        $('#summary').html("")
+
         fillDetailsView();
     });
 
