@@ -16,11 +16,7 @@
         });
     });
 
-    $('#Results').live('pagehide', function (event) {
-        $('#List').empty();
-    });
-
-    $('#Results').live('pagebeforeshow', function (event) {
+    $('#index').live('pagehide', function (event) {
         $.mobile.showPageLoadingMsg();
         go();
     });
