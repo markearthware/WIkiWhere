@@ -97,7 +97,7 @@ function buildUpList(list) {
                     src = "images/placeholder.jpg";
                 }   
             }
-            $('#List').append('<li><a target="_blank" class="listlink" id=' + i + '><img class="thumb" src="'+src+'" /><h3>' + list[i].title + '</h3><p class="ui-li-aside"><strong>' + roundNumber(parseFloat(list[i].distance), 2) + 'km</strong></p></a><a target="_blank" href=http://maps.google.com/?saddr=' + lat + ',' + lon + '&daddr=' + list[i].lat + ',' + list[i].lng + ' data-rel="dialog" data-transition="slideup">Map</a></li>');
+            $('#List').append('<li><a target="_blank" class="listlink" id=' + i + '><img class="thumb" src="'+src+'" /><h3>' + list[i].title + '</h3><p>' + roundNumber(parseFloat(list[i].distance), 2) + 'km</p></a><a target="_blank" href=http://maps.google.com/?saddr=' + lat + ',' + lon + '&daddr=' + list[i].lat + ',' + list[i].lng + ' data-rel="dialog" data-transition="slideup">Map</a></li>');
         }
     }
     else {
