@@ -24,6 +24,10 @@ $('#index').live('pagebeforeshow', function (event) {
                 $.mobile.changePage("#Results");
                 $.mobile.showPageLoadingMsg();
             }
+        } else {
+            go();
+            $.mobile.changePage("#Results");
+            $.mobile.showPageLoadingMsg();
         }
         return false;
     });
@@ -183,7 +187,7 @@ function buildUpList(list) {
             else {
                 src = "images/placeholder.png";
             }
-            $('#List').append('<li><a target="_blank" class="listlink" id=' + i + '><img class="thumb" src="' + src + '" /><h3>' + list[i].title + '</h3><p>' + roundNumber(parseFloat(list[i].distance), 2) + 'km away</p></a><a target="_blank" href="http://' + list[i].wikipediaUrl + '">Wiki</a></li>');
+            $('#List').append('<li><a target="_blank" class="listlink" id=' + i + '><img class="thumb" src="' + src + '" /><h3>' + list[i].title + '</h3><p>' + roundNumber(parseFloat(list[i].distance), 2) + 'km away</p></a><a class="wiki-link" target="_blank" href="http://' + list[i].wikipediaUrl + '">Wiki</a></li>');
         }
     }
     else {
@@ -193,6 +197,20 @@ function buildUpList(list) {
     $(".nodisplay").show();
 
     $('#List').listview('refresh');
+
+    $('.wiki-link').click(function () {
+        if (navigator.network) {
+            if (navigator.network.connection.type == "none") {
+                navigator.notification.alert("Sorry, you are not connected to WiFi or 3G. Please connect and then try again", function () { }, "Warning", "OK");
+                return false;
+            }
+            else {
+                return true;
+            }
+        } else {
+            return true;
+        }
+    });
 
     $('.listlink').click(function () {
         var id = $(this).attr("id");
