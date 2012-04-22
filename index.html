@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html style="height: 100%;">
 <head>
     <script type="text/javascript" src="scripts/phonegap.js"></script>
     <script src="scripts/jquery-1.6.4.min.js" type="text/javascript"></script>
@@ -13,16 +13,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"> 
     <title></title>
 </head>
-<body>
+<body style="height: 100%">
     <div id="index"  data-role="page">
         <div data-role="header">
-            <h1 class="bigtext">
-                <div class="headertext"><div class="logo"></div>WikiWhere</div></h1>
+            <h1 class="bigtext margin-10">
+                <div class="headertext"><span class="bigger">W</span>IKI<span class="bigger">W</span>HERE</h1>
         </div>
         <!-- /header -->
         <div data-role="content">
             <ul data-role="listview">
-                <li class="divider aligncenter" data-role="list-divider">A simple location-based Wiki search</li>
+                <li class="divider aligncenter link-blue" data-role="list-divider">A simple location-based Wiki search</li>
             </ul>
 
                 <form id="entryForm">
@@ -42,26 +42,25 @@
     <!-- /page -->
     <div id="Results" data-role="page">
         <div data-role="header">
-        <a data-icon="search" href="#index">Search</a>
             <h1>
                Search Results</h1>
+               <a data-icon="home" href="#index">Home</a>
         </div>
         <!-- /header -->
         <div data-role="content">
-              <h4 class="nodisplay">Points of interest near to: <br /><span id="user-location"></span></h4>
-              <ul data-inset="true" data-role="listview" id="List">
+              <ul data-role="listview" id="List">
               </ul>
         </div>
         <!-- /content -->
     </div>
 
 
-     <div id="details" data-role="page">
+     <div class="rel" id="details" data-role="page">
         <div data-role="header" data-position="inline">
         <a data-icon="arrow-l" href="#Results">Back</a>
             <h1 id="details-header">
                 </h1>
-         <a href="#index">Search</a>
+         <a data-icon="home" href="#index">Home</a>
         </div>
         <!-- /header -->
         <div data-role="content">
@@ -70,42 +69,47 @@
               <p id="summary"></p>
 
               <div class="clear"></div>
+              <div class="grey-bg">
+                  <a id="article" data-role="button" data-theme="a" data-icon="info" target="_blank href="#">View Wikipedia article</a>
 
-              <a id="article" data-role="button" data-theme="a" data-icon="info" target="_blank href="#">View Wikipedia article</a>
-
-              <div class="ui-grid-a">
-	                <div class="ui-block-a"><a data-icon="gear" data-role="button" href="#map">View Map</a></div>
-	                <div class="ui-block-b"><a data-icon="gear" data-role="button" href="#directions">Directions</a></div>
-              </div><!-- /grid-a -->
+                  <div class="ui-grid-a">
+	                    <div class="ui-block-a"><a data-icon="gear" data-role="button" href="#map">View Map</a></div>
+	                    <div class="ui-block-b"><a data-icon="gear" data-role="button" href="#directions">Directions</a></div>
+                  </div><!-- /grid-a -->
+              </div>
         </div>
         <!-- /content -->
     </div>
 
-      <div id="map" data-role="page">
-        <div data-role="header" data-position="inline">
+      <div class="rel" id="map" data-role="page">
+        <div data-role="header" data-position="inline" class="header">
             <a href="#details" data-icon="arrow-l">Back</a>
             <h1 id="header"></h1>
         </div>
         <!-- /header -->
-        <div data-role="content" style="width:100%; height:460px; padding:0;"> 
-		    <div id="map_canvas" style="width:100%; height:400px;"></div>
+        <div data-role="content" style="padding: 0px">
+            <div id="map_canvas"></div> 
+            <div style="margin-left:0px;" class="grey-bg">
            <a data-icon="gear" data-role="button" href="#directions">View Directions</a>
+           </div>
 	    </div>
-         
         <!-- /content -->
     </div>
 
-     <div id="directions" data-role="page">
+     <div class="rel" id="directions" data-role="page">
         <div data-role="header" data-position="inline">
             <a href="#details" data-icon="arrow-l">Back</a>
-	        <h1 id="directions-header"></h1>
+	        <h1>Directions</h1>
         </div>
         <!-- /header -->
         <div data-role="content"> 
+           <h4 id="directions-h4"></h4>
 		   <ol id="directions-list" data-inset="true" data-role="listview">
            
            </ol>
+           <div style="margin-left:-15px;" class="grey-bg">
             <a data-icon="gear" data-role="button" href="#map">View Map</a>
+            </div>
 	    </div>
         <!-- /content -->
     </div>

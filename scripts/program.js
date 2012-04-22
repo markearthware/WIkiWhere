@@ -5,19 +5,23 @@ var desLat;
 var desLon;
 var desTitle;
 var placeName;
+var distance;
+var locationStr;
 
 $('#index').live('pagebeforeshow', function (event) {
-    
+
     $("#List").empty();
 
     $('#SubmitBtn').click(function () {
-
+        lat = "";
+        lon = "";
         if (navigator.network) {
             if (navigator.network.connection.type == "None") {
                 navigator.notification.alert("Sorry, you are not connected to WiFi or 3G. Please connect and then try again", function () { }, "Warning", "OK");
             }
 
         } else {
+            go();
             $.mobile.changePage("#Results");
             $.mobile.showPageLoadingMsg();
         }
@@ -25,13 +29,7 @@ $('#index').live('pagebeforeshow', function (event) {
     });
 });
 
-$('#index').live('pagehide', function (event) {
-    $.mobile.showPageLoadingMsg();
-    go();
-});
-
-$('#details').live('pagebeforeshow', function (event) {
-
+$('#details').live('pageshow', function (event) {
     $('#title').text("");
     $('#summary').html("")
     fillDetailsView();
@@ -39,14 +37,13 @@ $('#details').live('pagebeforeshow', function (event) {
 });
 
 $('#map').live('pageshow', function (event) {
-
-    $('#header').text("Directions to " + desTitle);
-    initialize(lat, lon);
+    $('#header').text(desTitle);
+    initialize(lat, lon)
 });
 
 $('#directions').live('pageshow', function (event) {
     $('#directions-list').empty();
-    $('#directions-header').text("Directions to " + desTitle);
+    $('#directions-h4').text("Directions to " + desTitle);
     getDirections(lat, lon);
 });
 
@@ -84,7 +81,6 @@ function initialize(lat, lon) {
     var desLatlng = new google.maps.LatLng(desLat, desLon);
     
     var myOptions = {
-        zoom: 16,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     };
     var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
@@ -139,8 +135,8 @@ function go() {
 
 
 function callService() {
-
-    var url = 'http://api.geonames.org/findNearbyWikipediaJSON?lat=' + lat + '&lng=' + lon + '&maxRows=' + 50 + '&radius=' + ($('#slider').val()) + '&username=markshort';
+    distance = $('#slider').val();
+    var url = 'http://api.geonames.org/findNearbyWikipediaJSON?lat=' + lat + '&lng=' + lon + '&maxRows=' + 50 + '&radius=' + distance + '&username=markshort';
     var geocodeUrl = 'http://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat +','+ lon +'&sensor=true';
 
     $.ajax({
@@ -155,7 +151,8 @@ function callService() {
                     if (status == google.maps.GeocoderStatus.OK) {
                         var formattedAddr = results[0].formatted_address;
                         var split = formattedAddr.split(",");
-                        $('#user-location').text(split[0] + ", " + split[1]);
+                        locationStr = split[0] + ", " + split[1];
+                        $('#locationStr').text(locationStr);
                     }
                 });
             }
@@ -173,6 +170,8 @@ function buildUpList(list) {
 
     if (list.length > 0) {
 
+        $('#List').append('<li class="divider aligncenter link-blue" data-role="list-divider"><span id="locationStr"></span> - <br/>Points of interest less than ' + distance + ' km away:</li>');
+
         list.sort(compare);
         var src;
 
@@ -184,12 +183,11 @@ function buildUpList(list) {
             else {
                 src = "images/placeholder.png";
             }
-            $('#List').append('<li><a target="_blank" class="listlink" id=' + i + '><img class="thumb" src="' + src + '" /><h3>' + list[i].title + '</h3><p>' + roundNumber(parseFloat(list[i].distance), 2) + 'km</p></a><a target="_blank" href="http://' + list[i].wikipediaUrl + '">Wiki</a></li>');
+            $('#List').append('<li><a target="_blank" class="listlink" id=' + i + '><img class="thumb" src="' + src + '" /><h3>' + list[i].title + '</h3><p>' + roundNumber(parseFloat(list[i].distance), 2) + 'km away</p></a><a target="_blank" href="http://' + list[i].wikipediaUrl + '">Wiki</a></li>');
         }
     }
     else {
-
-        $('#List').append('<li class="divider" data-role="list-divider">Sorry, there were wiki articles for this query, try widening your catchment area or selecting a different category.</li>');
+        $('#List').append('<li class="divider aligncenter link-blue" data-role="list-divider">Sorry, there were no wiki articles for this query, try widening your catchment area.</li>');
     }
 
     $(".nodisplay").show();
