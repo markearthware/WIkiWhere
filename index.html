@@ -7,34 +7,35 @@
     <link href="styles/style.css" rel="stylesheet" type="text/css" />
     <link href="styles/jqmcss.css" rel="stylesheet" type="text/css" />
     <script src="scripts/jqm.js" type="text/javascript"></script>
-    <script type="text/javascript"
-      src="http://maps.googleapis.com/maps/api/js?key=AIzaSyC4Z6K2XkD5UrAxr-nMVJOJ4R2LPlCGcH8&sensor=true">
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyC4Z6K2XkD5UrAxr-nMVJOJ4R2LPlCGcH8&sensor=true">
     </script>
     <title></title>
 </head>
 <body style="height: 100%">
-    <div id="index"  data-role="page">
+    <div id="index" data-role="page">
         <div data-role="header">
             <h1 class="bigtext margin-10">
-                <div class="headertext"><span class="bigger">W</span>IKI<span class="bigger">W</span>HERE</h1>
+                <div class="headertext">
+                    <span class="bigger">W</span>IKI<span class="bigger">W</span>HERE</h1>
         </div>
         <!-- /header -->
         <div data-role="content">
             <ul data-role="listview">
-                <li class="divider aligncenter link-blue" data-role="list-divider">A simple location-based Wiki search</li>
+                <li class="divider aligncenter link-blue" data-role="list-divider">A simple location-based
+                    Wiki search</li>
             </ul>
-
-                <form id="entryForm" class="margin-top-20">
-                    <p>
-                    <label for="slider-0">Maximum distance away (km):</label>
-                    </p>
-                    <p>
-                    <input type="range" name="slider" id="slider" value="5" min="1" max="20" step="1" />
-                    </p>
-                    <p>
-				    <input data-theme="a" data-icon="search" type ="submit" id="SubmitBtn" value="Search"/>
-                    </p>
-                </form>
+            <form id="entryForm" class="margin-top-20">
+            <p>
+                <label for="slider-0">
+                    Maximum distance away (km):</label>
+            </p>
+            <p>
+                <input type="range" name="slider" id="slider" value="5" min="1" max="20" step="1" />
+            </p>
+            <p>
+                <input data-theme="a" data-icon="search" type="submit" id="SubmitBtn" value="Search" />
+            </p>
+            </form>
         </div>
         <!-- /content -->
     </div>
@@ -42,76 +43,92 @@
     <div id="Results" data-role="page">
         <div data-role="header">
             <h1>
-               Search Results</h1>
-               <a data-icon="home" href="#index">Home</a>
+                Search Results</h1>
+            <a data-icon="home" data-direction="reverse" href="#index">Home</a>
         </div>
         <!-- /header -->
         <div data-role="content">
-              <ul data-role="listview" id="List">
-              </ul>
+            <ul data-role="listview" id="List">
+            </ul>
         </div>
         <!-- /content -->
     </div>
-
-
-     <div class="rel" id="details" data-role="page">
+    <div class="rel" id="details" data-role="page">
         <div data-role="header" data-position="inline">
-        <a data-icon="arrow-l" href="#Results">Back</a>
+            <a data-icon="grid" data-direction="reverse" href="#Results">List</a>
             <h1 id="details-header">
-                </h1>
-         <a data-icon="home" href="#index">Home</a>
+            </h1>
+            <a data-icon="home" href="#index">Home</a>
         </div>
         <!-- /header -->
         <div data-role="content">
-           <ul data-role="listview">
+            <ul data-role="listview">
                 <li id="title" class="divider aligncenter link-blue" data-role="list-divider"></li>
             </ul>
-              <p class="margin-top-40" id="summary"></p>
-
-              <div class="clear"></div>
-              <div class="grey-bg">
-                  <a id="article" class="ext" data-role="button" data-theme="a" data-icon="info" target="_blank" href="#">View Wikipedia article</a>
-
-                  <div class="ui-grid-a">
-	                    <div class="ui-block-a ext"><a data-icon="gear" data-role="button" href="#map">View Map</a></div>
-	                    <div class="ui-block-b ext"><a data-icon="gear" data-role="button" href="#directions">Directions</a></div>
-                  </div><!-- /grid-a -->
-              </div>
+            <p class="margin-top-40" id="summary">
+            </p>
+            <div class="clear">
+            </div>
+            <a id="article" class="ext" data-role="button" data-theme="a" data-icon="info" target="_blank"
+                href="#">View Wikipedia article</a>
         </div>
         <!-- /content -->
+        <div data-role="footer" data-position="fixed">
+            <div data-role="navbar">
+                <ul>
+                    <li><a class="ui-btn-active ui-state-persist">Details</a></li>
+                    <li><a href="#map">Map</a></li>
+                    <li><a href="#directions">Directions</a></li>
+                </ul>
+            </div>
+        </div>
     </div>
-
-      <div class="rel" id="map" data-role="page">
+    </div>
+    <div class="rel" id="map" data-direction="reverse" data-add-back-btn="true" data-role="page">
         <div data-role="header" data-position="inline" class="header">
-            <a href="#details" data-icon="arrow-l">Back</a>
-            <h1 id="header"></h1>
-             <a href="#directions" data-icon="gear">List</a>
+            <h1 id="header">
+            </h1>
         </div>
         <!-- /header -->
         <div data-role="content" style="padding: 0px">
-            <div id="map_canvas"></div> 
-            <div style="margin-left:0px;" class="grey-bg">
-           <a data-icon="gear" data-role="button" href="#directions">View Directions</a>
-           </div>
-	    </div>
+            <div id="map_canvas">
+            </div>
+        </div>
         <!-- /content -->
+        <div data-role="footer" data-position="fixed">
+            <div data-role="navbar">
+                <ul>
+                    <li><a href="#details">Details</a></li>
+                    <li><a class="ui-btn-active ui-state-persist" href="#">Map</a></li>
+                    <li><a href="#directions">Directions</a></li>
+                </ul>
+            </div>
+        </div>
     </div>
-
-     <div class="rel" id="directions" data-role="page">
+    <div class="rel" data-direction="reverse" data-add-back-btn="true" id="directions" data-role="page">
         <div data-role="header" data-position="inline">
-            <a href="#details" data-icon="arrow-l">Back</a>
-	        <h1>Directions</h1>
-            <a href="#map" data-icon="gear">Map</a>
+            <h1>
+                Directions</h1>
         </div>
         <!-- /header -->
-        <div data-role="content"> 
+        <div data-role="content">
             <ul data-role="listview">
-                <li id="directions-h4" class="divider aligncenter link-blue" data-role="list-divider"></li>
+                <li id="directions-h4" class="divider aligncenter link-blue" data-role="list-divider">
+                </li>
             </ul>
-		   <ol class="margin-top-40" id="directions-list" data-inset="true" data-role="listview">
-           </ol>
-	    </div>
+            <ol class="margin-top-40" id="directions-list" data-inset="true" data-role="listview">
+            </ol>
+        </div>
         <!-- /content -->
+        <div data-role="footer" data-position="fixed">
+            <div data-role="navbar">
+                <ul>
+                    <li><a href="#details">Details</a></li>
+                    <li><a href="#map">Map</a></li>
+                    <li><a class="ui-btn-active ui-state-persist" href="#">Directions</a></li>
+                </ul>
+            </div>
+        </div>
     </div>
 </body>
 </html>

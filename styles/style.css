@@ -79,16 +79,6 @@ h4
     font-size: 18px !important;
 }
 
-.grey-bg-2
-{
-    background-color:#f0f0f0;
-    border-top: 1px solid #a6d7f7;
-    margin-left: -15px;
-    width: 100%;
-    padding-top: 10px;
-    padding-bottom: 10px;
-}
-
 .margin-10.bigtext.ui-title
 {
     margin: 10px !important;
@@ -199,9 +189,20 @@ padding-bottom:10%;
 height:auto;
 position:absolute;
 width:100%;
-height:65.5%;
+height:70%;
 max-height:1600px;
 overflow:hidden;
 display:block;
+}
+
+.ui-btn-active
+{
+    background: #79aac7 !important;
+}
+
+.ui-btn-active .ui-btn-text
+{
+    text-shadow: 0 2px 1px #254F7A !important;
+    color:#c3e3f7 !important;
 }
 
