@@ -34,7 +34,7 @@ $('#index').live('pagebeforeshow', function (event) {
     $("#List").empty();
 });
 
-$('#details').live('pageshow', function (event) {
+$('#details').live('pagebeforeshow', function (event) {
     $('#title').text("");
     $('#summary').html("")
     fillDetailsView();
@@ -63,7 +63,7 @@ $('#map').live('pageshow', function (event) {
     initialize(lat, lon)
 });
 
-$('#directions').live('pageshow', function (event) {
+$('#directions').live('pagebeforeshow', function (event) {
     $('#directions-list').empty();
     $('#directions-h4').text("Directions to " + desTitle);
     getDirections(lat, lon);
