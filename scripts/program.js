@@ -8,10 +8,7 @@ var placeName;
 var distance;
 var locationStr;
 
-$('#index').live('pagebeforeshow', function (event) {
-
-    $("#List").empty();
-
+$('#index').live('pagecreate', function (event) {
     $('#SubmitBtn').click(function () {
         lat = "";
         lon = "";
@@ -33,12 +30,33 @@ $('#index').live('pagebeforeshow', function (event) {
     });
 });
 
+$('#index').live('pagebeforeshow', function (event) {
+    $("#List").empty();
+});
+
 $('#details').live('pageshow', function (event) {
     $('#title').text("");
     $('#summary').html("")
     fillDetailsView();
     $('#details-header').text(desTitle);
 });
+
+$('#details').live('pagecreate', function (event) {
+    $('.ext').click(function () {
+        if (navigator.network) {
+            if (navigator.network.connection.type == "none") {
+                navigator.notification.alert("Sorry, you are not connected to WiFi or 3G. Please connect and then try again", function () { }, "Warning", "OK");
+                return false;
+            }
+            else {
+                return true;
+            }
+        } else {
+            return true;
+        }
+    });
+});
+
 
 $('#map').live('pageshow', function (event) {
     $('#header').text(desTitle);
@@ -187,7 +205,7 @@ function buildUpList(list) {
             else {
                 src = "images/placeholder.png";
             }
-            $('#List').append('<li><a target="_blank" class="listlink" id=' + i + '><img class="thumb" src="' + src + '" /><h3>' + list[i].title + '</h3><p>' + roundNumber(parseFloat(list[i].distance), 2) + 'km away</p></a><a class="wiki-link" target="_blank" href="http://' + list[i].wikipediaUrl + '">Wiki</a></li>');
+            $('#List').append('<li><a target="_blank" class="listlink" id=' + i + '><img class="thumb" src="' + src + '" /><h3>' + list[i].title + '</h3><p>' + roundNumber(parseFloat(list[i].distance), 2) + 'km away</p></a><a class="wikilink" target="_blank" href="http://' + list[i].wikipediaUrl + '">Wiki</a></li>');
         }
     }
     else {
@@ -198,7 +216,7 @@ function buildUpList(list) {
 
     $('#List').listview('refresh');
 
-    $('.wiki-link').click(function () {
+    $('.wikilink').click(function () {
         if (navigator.network) {
             if (navigator.network.connection.type == "none") {
                 navigator.notification.alert("Sorry, you are not connected to WiFi or 3G. Please connect and then try again", function () { }, "Warning", "OK");
@@ -216,15 +234,6 @@ function buildUpList(list) {
         var id = $(this).attr("id");
         localStorage.id = id;
         $.mobile.changePage("#details");
-    });
-
-    $('.maplink').click(function () {
-        var id = $(this).attr("id");
-        localStorage.id = id;
-        desLat = resultsList[id].lat;
-        desLon = resultsList[id].lng;
-        desTitle = resultsList[id].title;
-        $.mobile.changePage("#map");
     });
 
     $.mobile.hidePageLoadingMsg();
