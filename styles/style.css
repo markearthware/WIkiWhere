@@ -5,7 +5,7 @@
 
 .ui-icon-map
 {
-    background-image: url('images/map.png') !important;
+    background-image: url('images/wikipedia-icon.png') !important;
 }
 
 .nobold
@@ -13,14 +13,74 @@
     font-weight: lighter;
 }
 
+.nodisplay
+{
+    display: none;
+}
+
 .ui-field-contain
 {
     padding-top: 0 !important;
 }
 
-.ui-field-contain div.ui-slider
+.ui-icon-arrow-r
 {
-    width: 76% !important;
+    background: none !important;
+}
+
+.ui-btn-up-b 
+{
+    background: url('../images/wikipedia-icon.png') !important;
+    border: 0 !important;
+}
+
+.ui-li-link-alt .ui-btn
+{
+    right: 4px !important;
+    top: 46% !important;
+}
+
+.ui-btn-icon-notext
+{
+    width: 32px !important;
+    height: 30px !important;
+}
+
+.ui-btn.ui-btn-up-b.ui-btn-icon-notext.ui-btn-corner-all.ui-shadow
+{
+    border-radius: 0px !important;
+    -webkit-border-radius: 0px !important;
+}
+
+p .div.ui-slider
+{
+    width: 90% !important;
+}
+
+h4
+{
+    margin-top: 10px;
+}
+
+.bigtext
+{
+    font-size: 22px !important;
+}
+
+.headertext
+{
+    position: relative;
+    z-index: 1;
+}
+
+.aligncenter
+{
+    text-align:center !important;
+}
+
+#entryForm
+{
+    margin-top: 30px;
 }
 
 .ui-li-heading,.ui-li-desc,.ui-li-aside

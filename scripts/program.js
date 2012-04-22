@@ -1,45 +1,125 @@
-﻿    var lat;
-    var lon;
-    var type;
-    var length;
-    var i;
-    var list = [];
-    var resultsList;
+﻿var lat;
+var lon
+var resultsList;
+var desLat;
+var desLon;
+var desTitle;
+var placeName;
 
-    $(document).ready(function () {
-        $('#SubmitBtn').click(function () {
+$('#index').live('pagebeforeshow', function (event) {
+    
+    $("#List").empty();
 
+    $('#SubmitBtn').click(function () {
+
+        if (navigator.network) {
+            if (navigator.network.connection.type == "None") {
+                navigator.notification.alert("Sorry, you are not connected to WiFi or 3G. Please connect and then try again", function () { }, "Warning", "OK");
+            }
+
+        } else {
             $.mobile.changePage("#Results");
             $.mobile.showPageLoadingMsg();
-
-            return false;
-        });
-    });
-
-    $('#index').live('pagehide', function (event) {
-        $.mobile.showPageLoadingMsg();
-        $("#List").empty();
-        go();
-    });
-
-    $('#details').live('pagebeforeshow', function (event) {
-
-        $('#title').text("");
-        $('#summary').html("")
-
-        fillDetailsView();
-    });
-
-    function fillDetailsView() {
-        var id = localStorage.id;
-        $('#title').text(resultsList[id].title);
-        if (resultsList[id].thumbnailImg) {
-            $('#summary').html("<img class='thumb2 left' src='" + resultsList[id].thumbnailImg + "' />")
         }
-        $('#summary').append(resultsList[id].summary);
-        $('#directions').attr('href', 'http://maps.google.com/?saddr=' + lat + ',' + lon + '&daddr=' + resultsList[id].lat + ',' + resultsList[id].lng);
-        $('#article').attr('href', 'http://'+resultsList[id].wikipediaUrl);
+        return false;
+    });
+});
+
+$('#index').live('pagehide', function (event) {
+    $.mobile.showPageLoadingMsg();
+    go();
+});
+
+$('#details').live('pagebeforeshow', function (event) {
+
+    $('#title').text("");
+    $('#summary').html("")
+    fillDetailsView();
+    $('#details-header').text(desTitle);
+});
+
+$('#map').live('pageshow', function (event) {
+
+    $('#header').text("Directions to " + desTitle);
+    initialize(lat, lon);
+});
+
+$('#directions').live('pageshow', function (event) {
+    $('#directions-list').empty();
+    $('#directions-header').text("Directions to " + desTitle);
+    getDirections(lat, lon);
+});
+
+function getDirections(lat, lon) {
+    var directionsService = new google.maps.DirectionsService();
+    var latlng = new google.maps.LatLng(lat, lon);
+    var desLatlng = new google.maps.LatLng(desLat, desLon);
+
+    var directionsRequest =
+    {
+        origin: latlng,
+        destination: desLatlng,
+        travelMode: google.maps.DirectionsTravelMode.DRIVING
+    };
+
+    directionsService.route(directionsRequest, function (result, status) {
+        if (status == google.maps.DirectionsStatus.OK) {
+            $('#directions-list').append('<li>Start</li>');
+            $(result.routes[0].legs).each(function () {
+                $(this.steps).each(function () {
+                    $('#directions-list').append('<li>' + this.instructions + '</li>');
+                });
+            });
+            $('#directions-list').append('<li>Finish</li>');
+            $('#directions-list').listview('refresh');
+        }
+    });
+}
+
+function initialize(lat, lon) {
+
+    var directionsService = new google.maps.DirectionsService();
+    directionsDisplay = new google.maps.DirectionsRenderer(); 
+    var latlng = new google.maps.LatLng(lat, lon);
+    var desLatlng = new google.maps.LatLng(desLat, desLon);
+    
+    var myOptions = {
+        zoom: 16,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+    
+    directionsDisplay.setMap(map);
+
+    var directionsRequest =
+    {
+       origin: latlng,
+       destination: desLatlng,
+       travelMode: google.maps.DirectionsTravelMode.DRIVING
+    };
+
+    directionsService.route(directionsRequest, function(result,status){
+        if (status == google.maps.DirectionsStatus.OK)
+        {
+        directionsDisplay.setDirections(result);   // draw the routes
+        }
+    });
+}
+
+function fillDetailsView() {
+    var id = localStorage.id;
+
+    desLat = resultsList[id].lat;
+    desLon = resultsList[id].lng;
+    desTitle = resultsList[id].title;
+
+    $('#title').text(resultsList[id].title + " (" + roundNumber(resultsList[id].distance, 2) + "km away)");
+    if (resultsList[id].thumbnailImg) {
+        $('#summary').html("<img class='thumb2 left' src='" + resultsList[id].thumbnailImg + "' />")
     }
+    $('#summary').append(resultsList[id].summary);
+    $('#article').attr('href', 'http://' + resultsList[id].wikipediaUrl);
+}
 
 function go() {
     if (!!navigator.geolocation) {
@@ -60,18 +140,32 @@ function go() {
 
 function callService() {
 
-    var url = 'http://api.geonames.org/findNearbyWikipediaJSON?lat='+lat+'&lng='+lon+'&maxRows='+25+'&radius='+($('#slider').val())+'&username=markshort';
+    var url = 'http://api.geonames.org/findNearbyWikipediaJSON?lat=' + lat + '&lng=' + lon + '&maxRows=' + 50 + '&radius=' + ($('#slider').val()) + '&username=markshort';
+    var geocodeUrl = 'http://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat +','+ lon +'&sensor=true';
 
     $.ajax({
         url: url,
         dataType: "json",
         success: function (data) {
             buildUpList(data.geonames);
+            var geocoder = new google.maps.Geocoder();
+            var latlng = new google.maps.LatLng(lat, lon);
+            if (geocoder) {
+                geocoder.geocode({ 'latLng': latlng }, function (results, status) {
+                    if (status == google.maps.GeocoderStatus.OK) {
+                        var formattedAddr = results[0].formatted_address;
+                        var split = formattedAddr.split(",");
+                        $('#user-location').text(split[0] + ", " + split[1]);
+                    }
+                });
+            }
         },
         fail: function (error) {
         }
     });
 }
+
+
 
 function buildUpList(list) {
 
@@ -83,28 +177,22 @@ function buildUpList(list) {
         var src;
 
         for (var i = 0; i < list.length; i++) {
-            
+
             if (list[i].thumbnailImg) {
                 src = list[i].thumbnailImg;
             }
             else {
-                if (list[i].type == 'landmark') {
-                     src = "images/placeholder.jpg";
-                }
-                else if(list[i].type == 'river' || list[i].type == 'waterbody' || list[i].type == 'mountain') {
-                     src = "images/questionMark.jpg";
-                }
-                else{
-                    src = "images/placeholder.jpg";
-                }   
+                src = "images/placeholder.png";
             }
-            $('#List').append('<li><a target="_blank" class="listlink" id=' + i + '><img class="thumb" src="'+src+'" /><h3>' + list[i].title + '</h3><p>' + roundNumber(parseFloat(list[i].distance), 2) + 'km</p></a><a target="_blank" href=http://maps.google.com/?saddr=' + lat + ',' + lon + '&daddr=' + list[i].lat + ',' + list[i].lng + ' data-rel="dialog" data-transition="slideup">Map</a></li>');
+            $('#List').append('<li><a target="_blank" class="listlink" id=' + i + '><img class="thumb" src="' + src + '" /><h3>' + list[i].title + '</h3><p>' + roundNumber(parseFloat(list[i].distance), 2) + 'km</p></a><a target="_blank" href="http://' + list[i].wikipediaUrl + '">Wiki</a></li>');
         }
     }
     else {
 
         $('#List').append('<li class="divider" data-role="list-divider">Sorry, there were wiki articles for this query, try widening your catchment area or selecting a different category.</li>');
     }
+
+    $(".nodisplay").show();
 
     $('#List').listview('refresh');
 
@@ -114,8 +202,18 @@ function buildUpList(list) {
         $.mobile.changePage("#details");
     });
 
+    $('.maplink').click(function () {
+        var id = $(this).attr("id");
+        localStorage.id = id;
+        desLat = resultsList[id].lat;
+        desLon = resultsList[id].lng;
+        desTitle = resultsList[id].title;
+        $.mobile.changePage("#map");
+    });
+
     $.mobile.hidePageLoadingMsg();
 }
+
 
 function compare(a, b) {
     return a.distance - b.distance;
@@ -124,18 +222,5 @@ function compare(a, b) {
 function roundNumber(num, dec) {
     var result = Math.round(num * Math.pow(10, dec)) / Math.pow(10, dec);
     return result;
-}
-
-function firstSentence(str) {
-
-    var array = str.split(/^(.*?)[.?!]\s/);
-
-    if (array[0].length > 1) {
-        return array[0];
-    }
-    else if (array[1].length > 1) {
-        return array[1];
-    }
-    else return "";
 }
 
