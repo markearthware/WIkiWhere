@@ -16,14 +16,14 @@ $('#index').live('pagebeforeshow', function (event) {
         lat = "";
         lon = "";
         if (navigator.network) {
-            if (navigator.network.connection.type == "None") {
+            if (navigator.network.connection.type == "none") {
                 navigator.notification.alert("Sorry, you are not connected to WiFi or 3G. Please connect and then try again", function () { }, "Warning", "OK");
             }
-
-        } else {
-            go();
-            $.mobile.changePage("#Results");
-            $.mobile.showPageLoadingMsg();
+            else {
+                go();
+                $.mobile.changePage("#Results");
+                $.mobile.showPageLoadingMsg();
+            }
         }
         return false;
     });
@@ -109,7 +109,7 @@ function fillDetailsView() {
     desLon = resultsList[id].lng;
     desTitle = resultsList[id].title;
 
-    $('#title').text(resultsList[id].title + " (" + roundNumber(resultsList[id].distance, 2) + "km away)");
+    $('#title').text(roundNumber(resultsList[id].distance, 2) + "km away");
     if (resultsList[id].thumbnailImg) {
         $('#summary').html("<img class='thumb2 left' src='" + resultsList[id].thumbnailImg + "' />")
     }
@@ -170,7 +170,7 @@ function buildUpList(list) {
 
     if (list.length > 0) {
 
-        $('#List').append('<li class="divider aligncenter link-blue" data-role="list-divider"><span id="locationStr"></span> - <br/>Points of interest less than ' + distance + ' km away:</li>');
+        $('#List').append('<li class="divider aligncenter link-blue" data-role="list-divider"><span id="locationStr"></span><br/>Points of interest less than ' + distance + ' km away:</li>');
 
         list.sort(compare);
         var src;
@@ -221,4 +221,5 @@ function roundNumber(num, dec) {
     var result = Math.round(num * Math.pow(10, dec)) / Math.pow(10, dec);
     return result;
 }
+
 

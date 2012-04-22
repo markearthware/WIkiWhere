@@ -74,6 +74,21 @@ h4
     padding-bottom: 10px;
 }
 
+#summary
+{
+    font-size: 18px !important;
+}
+
+.grey-bg-2
+{
+    background-color:#f0f0f0;
+    border-top: 1px solid #a6d7f7;
+    margin-left: -15px;
+    width: 100%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
 .margin-10.bigtext.ui-title
 {
     margin: 10px !important;
@@ -120,7 +135,7 @@ h4
 
 #entryForm
 {
-    margin-top: 30px;
+    margin-top: 40px !important;
 }
 
 .ui-li-heading,.ui-li-desc,.ui-li-aside
@@ -165,6 +180,11 @@ h4
     clear: both;
 }
 
+.margin-top-40
+{
+    margin-top: 40px !important;
+}
+
 .classHeader{
 height:10% !important;
 }
@@ -179,7 +199,7 @@ padding-bottom:10%;
 height:auto;
 position:absolute;
 width:100%;
-height:61%;
+height:65.5%;
 max-height:1600px;
 overflow:hidden;
 display:block;

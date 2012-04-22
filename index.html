@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html style="height: 100%;">
 <head>
-    <script type="text/javascript" src="scripts/phonegap.js"></script>
+    <script type="text/javascript" src="phonegap.js"></script>
     <script src="scripts/jquery-1.6.4.min.js" type="text/javascript"></script>
     <script src="scripts/program.js" type="text/javascript"></script>
     <link href="styles/style.css" rel="stylesheet" type="text/css" />
@@ -10,7 +10,6 @@
     <script type="text/javascript"
       src="http://maps.googleapis.com/maps/api/js?key=AIzaSyC4Z6K2XkD5UrAxr-nMVJOJ4R2LPlCGcH8&sensor=true">
     </script>
-    <meta name="viewport" content="width=device-width, initial-scale=1"> 
     <title></title>
 </head>
 <body style="height: 100%">
@@ -25,7 +24,7 @@
                 <li class="divider aligncenter link-blue" data-role="list-divider">A simple location-based Wiki search</li>
             </ul>
 
-                <form id="entryForm">
+                <form id="entryForm" class="margin-top-20">
                     <p>
                     <label for="slider-0">Maximum distance away (km):</label>
                     </p>
@@ -64,9 +63,10 @@
         </div>
         <!-- /header -->
         <div data-role="content">
-              <h4 id="title"></h4>
-              
-              <p id="summary"></p>
+           <ul data-role="listview">
+                <li id="title" class="divider aligncenter link-blue" data-role="list-divider"></li>
+            </ul>
+              <p class="margin-top-40" id="summary"></p>
 
               <div class="clear"></div>
               <div class="grey-bg">
@@ -85,6 +85,7 @@
         <div data-role="header" data-position="inline" class="header">
             <a href="#details" data-icon="arrow-l">Back</a>
             <h1 id="header"></h1>
+             <a href="#directions" data-icon="gear">List</a>
         </div>
         <!-- /header -->
         <div data-role="content" style="padding: 0px">
@@ -100,16 +101,15 @@
         <div data-role="header" data-position="inline">
             <a href="#details" data-icon="arrow-l">Back</a>
 	        <h1>Directions</h1>
+            <a href="#map" data-icon="gear">Map</a>
         </div>
         <!-- /header -->
         <div data-role="content"> 
-           <h4 id="directions-h4"></h4>
-		   <ol id="directions-list" data-inset="true" data-role="listview">
-           
+            <ul data-role="listview">
+                <li id="directions-h4" class="divider aligncenter link-blue" data-role="list-divider"></li>
+            </ul>
+		   <ol class="margin-top-40" id="directions-list" data-inset="true" data-role="listview">
            </ol>
-           <div style="margin-left:-15px;" class="grey-bg">
-            <a data-icon="gear" data-role="button" href="#map">View Map</a>
-            </div>
 	    </div>
         <!-- /content -->
     </div>
