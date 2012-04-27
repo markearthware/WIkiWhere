@@ -203,9 +203,9 @@ function buildUpList(list) {
                 src = list[i].thumbnailImg;
             }
             else {
-                src = "images/placeholder.png";
+                src = "images/placeholder2.png";
             }
-            $('#List').append('<li><a target="_blank" class="listlink" id=' + i + '><img class="thumb" src="' + src + '" /><h3>' + list[i].title + '</h3><p>' + roundNumber(parseFloat(list[i].distance), 2) + 'km away</p></a><a class="wikilink" target="_blank" href="http://' + list[i].wikipediaUrl + '">Wiki</a></li>');
+            $('#List').append('<li><a target="_blank" class="listlink" id=' + i + '><img height="50" width="50" class="thumb" src="' + src + '" /><h3>' + list[i].title + '</h3><p>' + roundNumber(parseFloat(list[i].distance), 2) + 'km away</p></a><a class="wikilink" target="_blank" href="http://' + list[i].wikipediaUrl + '">Wiki</a></li>');
         }
     }
     else {

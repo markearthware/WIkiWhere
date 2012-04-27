@@ -145,11 +145,22 @@ h4
 
 .thumb
 {
-    margin: 7px;
-    margin-bottom: 0;
+    margin-top: 22% !important;
+    margin-left: 5px;
     -webkit-border-radius: 4px !important;
     border-radius: 4px !important;
 }
+
+.ui-li-has-thumb .ui-btn-inner a.ui-link-inherit, .ui-li-static.ui-li-has-thumb
+{
+    padding-left: 70px !important;
+}
+
+ .ui-li-thumb
+ {
+     max-height: 999px !important;
+     max-width: 999px !important;
+ }
 
 .clear
 {
